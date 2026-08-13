@@ -47,3 +47,4 @@ Before running this application, make sure you have the following installed on y
 
 1. **Clone the Repository:**
    ```bash
+https://github.com/dev-kareem-se/Personal-Finance-Management.git
