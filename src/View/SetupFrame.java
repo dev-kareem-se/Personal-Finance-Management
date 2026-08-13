@@ -1,26 +1,10 @@
 package View;
-//تم استدعاء الكلاس (User)الذي سنبني عليه الواجهة
+//call User class from Model package
 import Model.User;
-//استدعاء المكتبة swing & awt
+//call swing & awt
 import javax.swing.*;
 import java.awt.*;
 
-/**
- *  LECTURE STEP 2: JFrame -+ النافذة الأساسية
-
- * SetupFrame يرث من JFrame — هذا هو النمط الأساسي في Swing
- * extends JFrame = نافذتك الخاصة!
-
- * المكونات التي سنتعلمها هنا:
- *  - JFrame      : النافذة
- *  - JPanel      : حاوية (Container) للعناصر
- *  - JLabel      : نص ثابت (عنوان/وصف)
- *  - JTextField  : حقل إدخال نص
- *  - JComboBox   : قائمة اختيار منسدلة
- *  - JSpinner    : حقل رقم مع سهمين + و -
- *  - JButton     : زر قابل للضغط
- *  - GridBagLayout: Layout متقدم للترتيب الدقيق
- */
 //this class inherits from JFrame
 public class SetupFrame extends JFrame {
 
@@ -132,37 +116,36 @@ public class SetupFrame extends JFrame {
     // logic of Start button
     private void handleStart() {
         // get inputs
+        // trim() : delete spaces
         String firstName = firstNameField.getText().trim();
         String lastName  = lastNameField.getText().trim();
+        // getSelectedItem() return Object >> casting to change Object to String
         String gender    = (String) genderBox.getSelectedItem();
+        // getValue() return Object >> casting to change Object to Integer
         int age          = (Integer) ageSpinner.getValue();
 
         // Validation
         if (firstName.isEmpty() || lastName.isEmpty()) {
             // JOptionPane: show massage
             JOptionPane.showMessageDialog(
-                this,
+                this,// point to setUpFrame
                 "Please enter your full name!", //massage
                 "Validation Error",                // address
                 JOptionPane.WARNING_MESSAGE        // icon type
             );
-            return;
+            return; //stop execution
         }
 
         // create user from Model
         User user = new User(firstName, lastName, gender, age);
 
-        // open and close main page
+        // create DashboardFrame to user object
         DashboardFrame dashboard = new DashboardFrame(user);
-        dashboard.setVisible(true);
-        this.dispose(); // تحرير الذاكرة لهذه النافذة
+        dashboard.setVisible(true);// show DashboardFrame
+        this.dispose(); // close setUpFrame
     }
-
-    // ══════════════════════════════════════
-    // 🛠️ Helper Methods - دوال مساعدة
-    // ══════════════════════════════════════
-
-    /** إنشاء JLabel بتنسيق موحد */
+    // supporter methods
+    // create Label method
     private JLabel makeLabel(String text) {
         JLabel label = new JLabel(text);
         label.setFont(new Font("Segoe UI", Font.BOLD, 14));
@@ -170,12 +153,12 @@ public class SetupFrame extends JFrame {
         return label;
     }
 
-    /** تطبيق تنسيق موحد على JTextField */
+    // design for text field
     private void styleTextField(JTextField field) {
         field.setFont(new Font("Segoe UI", Font.PLAIN, 14));
         field.setBorder(BorderFactory.createCompoundBorder(
-            BorderFactory.createLineBorder(new Color(180, 200, 230), 1),
-            BorderFactory.createEmptyBorder(5, 8, 5, 8)
+            BorderFactory.createLineBorder(new Color(180, 200, 230), 1),// outside border
+            BorderFactory.createEmptyBorder(5, 8, 5, 8)// inside border
         ));
     }
 }
